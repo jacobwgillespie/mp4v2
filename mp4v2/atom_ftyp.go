@@ -1,0 +1,5 @@
+package mp4v2
+
+type MP4FtypAtom struct {
+	MP4Atom
+}
