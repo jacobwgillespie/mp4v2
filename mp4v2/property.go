@@ -19,24 +19,24 @@ const (
 )
 
 type MP4PropertyInterface interface {
-	GetParentAtom() *MP4Atom
-	GetName() string
-	GetType() MP4PropertyType
-	IsReadOnly() bool
+	// GetParentAtom() *MP4Atom
+	// GetName() string
+	// GetType() MP4PropertyType
+	// IsReadOnly() bool
 	SetReadOnly(value ...bool)
-	IsImplicit() bool
-	SetImplicit(value ...bool)
-	GetCount() uint32
-	SetCount(count uint32)
-	Generate()
-	Read(file *MP4File, index uint32)
-	Write(file *MP4File, index uint32)
-	Dump(indent uint8, dumpImplicits bool, index uint32)
-	FindProperty(name string, ppProperty **MP4Property, pIndex *uint32) bool
+	// IsImplicit() bool
+	// SetImplicit(value ...bool)
+	// GetCount() uint32
+	// SetCount(count uint32)
+	// Generate()
+	// Read(file *MP4File, index uint32)
+	// Write(file *MP4File, index uint32)
+	// Dump(indent uint8, dumpImplicits bool, index uint32)
+	// FindProperty(name string, ppProperty **MP4Property, pIndex *uint32) bool
 }
 
 type MP4Property struct {
-	mParentAtom *MP4Atom
+	mParentAtom MP4AtomInterface
 	mName       string
 	mReadOnly   bool
 	mImplicit   bool
@@ -49,7 +49,7 @@ func NewMP4Property(parentAtom *MP4Atom, name string) *MP4Property {
 	}
 }
 
-func (p *MP4Property) GetParentAtom() *MP4Atom {
+func (p *MP4Property) GetParentAtom() MP4AtomInterface {
 	return p.mParentAtom
 }
 

@@ -8,7 +8,7 @@ import "fmt"
 
 // MP4Integer8Property encapsulates a property of type uint8
 type MP4Integer8Property struct {
-	mParentAtom *MP4Atom
+	mParentAtom MP4AtomInterface
 	mName       string
 	mReadOnly   bool
 	mImplicit   bool
@@ -16,7 +16,7 @@ type MP4Integer8Property struct {
 }
 
 // NewMP4Integer8Property creates a new MP4Integer8Property
-func NewMP4Integer8Property(parentAtom *MP4Atom, name string) *MP4Integer8Property {
+func NewMP4Integer8Property(parentAtom MP4AtomInterface, name string) *MP4Integer8Property {
 	prop := &MP4Integer8Property{
 		mParentAtom: parentAtom,
 		mName:       name,
@@ -29,7 +29,7 @@ func NewMP4Integer8Property(parentAtom *MP4Atom, name string) *MP4Integer8Proper
 }
 
 // GetParentAtom returns the parent atom for the property
-func (p *MP4Integer8Property) GetParentAtom() *MP4Atom {
+func (p *MP4Integer8Property) GetParentAtom() MP4AtomInterface {
 	return p.mParentAtom
 }
 

@@ -8,7 +8,7 @@ import "fmt"
 
 // MP4Integer32Property encapsulates a property of type uint32
 type MP4Integer32Property struct {
-	mParentAtom *MP4Atom
+	mParentAtom MP4AtomInterface
 	mName       string
 	mReadOnly   bool
 	mImplicit   bool
@@ -16,7 +16,7 @@ type MP4Integer32Property struct {
 }
 
 // NewMP4Integer32Property creates a new MP4Integer32Property
-func NewMP4Integer32Property(parentAtom *MP4Atom, name string) *MP4Integer32Property {
+func NewMP4Integer32Property(parentAtom MP4AtomInterface, name string) *MP4Integer32Property {
 	prop := &MP4Integer32Property{
 		mParentAtom: parentAtom,
 		mName:       name,
@@ -29,7 +29,7 @@ func NewMP4Integer32Property(parentAtom *MP4Atom, name string) *MP4Integer32Prop
 }
 
 // GetParentAtom returns the parent atom for the property
-func (p *MP4Integer32Property) GetParentAtom() *MP4Atom {
+func (p *MP4Integer32Property) GetParentAtom() MP4AtomInterface {
 	return p.mParentAtom
 }
 

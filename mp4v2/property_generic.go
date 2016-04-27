@@ -20,7 +20,7 @@ type PropType generic.Type
 
 // MP4PropNameProperty encapsulates a property of type PropType
 type MP4PropNameProperty struct {
-	mParentAtom *MP4Atom
+	mParentAtom MP4AtomInterface
 	mName       string
 	mReadOnly   bool
 	mImplicit   bool
@@ -28,7 +28,7 @@ type MP4PropNameProperty struct {
 }
 
 // NewMP4PropNameProperty creates a new MP4PropNameProperty
-func NewMP4PropNameProperty(parentAtom *MP4Atom, name string) *MP4PropNameProperty {
+func NewMP4PropNameProperty(parentAtom MP4AtomInterface, name string) *MP4PropNameProperty {
 	prop := &MP4PropNameProperty{
 		mParentAtom: parentAtom,
 		mName:       name,
@@ -41,7 +41,7 @@ func NewMP4PropNameProperty(parentAtom *MP4Atom, name string) *MP4PropNameProper
 }
 
 // GetParentAtom returns the parent atom for the property
-func (p *MP4PropNameProperty) GetParentAtom() *MP4Atom {
+func (p *MP4PropNameProperty) GetParentAtom() MP4AtomInterface {
 	return p.mParentAtom
 }
 

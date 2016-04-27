@@ -11,6 +11,18 @@ type MP4AtomInfo struct {
 	mCount     uint32
 }
 
+func NewMP4AtomInfo(name string, mandatory bool, onlyOne bool) *MP4AtomInfo {
+	atomInfo := &MP4AtomInfo{
+		mName:      name,
+		mMandatory: mandatory,
+		mOnlyOne:   onlyOne,
+	}
+
+	return atomInfo
+}
+
+type MP4AtomInterface interface{}
+
 type MP4Atom struct {
 	mFile          *MP4File
 	mStart         uint64
@@ -24,12 +36,12 @@ type MP4Atom struct {
 	mPParentAtom *MP4Atom
 	mDepth       uint8
 
-	mPProperties     []*MP4Property
+	mPProperties     []MP4PropertyInterface
 	mPChildAtomInfos []*MP4AtomInfo
 	mPChildAtoms     []*MP4Atom
 }
 
-func CreateAtom(file *MP4File, mtype string) *MP4Atom {
+func NewMP4Atom(file *MP4File, mtype string) *MP4Atom {
 	atom := &MP4Atom{
 		mFile:  file,
 		mType:  mtype,
@@ -138,10 +150,31 @@ func (a *MP4Atom) GetChildAtom(idx int) *MP4Atom {
 	return a.mPChildAtoms[idx]
 }
 
-func (a *MP4Atom) GetProperty(idx int) *MP4Property {
+func (a *MP4Atom) GetProperty(idx int) MP4PropertyInterface {
 	return a.mPProperties[idx]
 }
 
 func (a *MP4Atom) GetCount() int {
 	return len(a.mPProperties)
 }
+
+func (a *MP4Atom) AddProperty(property MP4PropertyInterface) {
+	a.mPProperties = append(a.mPProperties, &property)
+}
+
+func (a *MP4Atom) AddVersionAndFlags() {
+	a.AddProperty(NewMP4Integer8Property(a, "version"))
+	a.AddProperty(NewMP4Integer24Property(a, "flags"))
+}
+
+func (a *MP4Atom) AddReserved(parentAtom MP4AtomInterface, name string, size int) {
+	reserved := NewMP4BytesProperty(parentAtom, name, size, 0)
+	reserved.SetReadOnly(true)
+	a.AddProperty(reserved)
+}
+
+func (a *MP4Atom) ExpectChildAtom(name string, mandatory bool, onlyOne bool) {
+	a.mPChildAtomInfos = append(a.mPChildAtomInfos, NewMP4AtomInfo(name, mandatory, onlyOne))
+}
+
+func (a *MP4Atom) Generate() {}
